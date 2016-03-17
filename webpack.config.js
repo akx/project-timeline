@@ -14,7 +14,10 @@ module.exports = {
             {test: /\.(png|gif|jpeg)$/, loader: "url"},
             {
                 test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
+                include: [
+                    __dirname + "/src",
+                    /node_modules\/vis/,
+                ],
                 loader: 'babel',
                 query: {presets: ['es2015']},
             },

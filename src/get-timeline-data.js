@@ -1,4 +1,11 @@
-import R from "ramda";
+import flatten from "ramda/src/flatten";
+import identity from "lodash/identity";
+import map from "ramda/src/map";
+import pipe from "ramda/src/pipe";
+import pluck from "ramda/src/pluck";
+import sortBy from "ramda/src/sortBy";
+import uniq from "ramda/src/uniq";
+import xprod from "ramda/src/xprod";
 import fishue from "./fishue";
 
 function getGroupDefinitions(parsed, lanes) {
@@ -6,14 +13,14 @@ function getGroupDefinitions(parsed, lanes) {
         return [];
     }
     const key = (lanes === "projects" ? "projects" : "people");
-    return R.pipe(
-        R.pluck(key), R.flatten, R.sortBy(R.identity), R.uniq,
-        R.map((name) => ({id: name, content: name}))
+    return pipe(
+        pluck(key), flatten, sortBy(identity), uniq,
+        map((name) => ({id: name, content: name}))
     )(parsed);
 }
 
 function getProjectStyles(parsed) {
-    const projects = R.pipe(R.pluck("projects"), R.flatten, R.sortBy(R.identity), R.uniq)(parsed);
+    const projects = pipe(pluck("projects"), flatten, sortBy(identity), uniq)(parsed);
     const projectStyles = {};
     projects.forEach((project, index) => {
         const hue = fishue(index);
@@ -29,7 +36,7 @@ export default function getTimelineData(parsed, lanes) {
     const addItem = items.push.bind(items);
     let id = 1;
     parsed.forEach(({range, people, projects}) => {
-        R.xprod(people, projects).forEach(([person, project]) => {
+        xprod(people, projects).forEach(([person, project]) => {
             let content;
             let group;
             switch (lanes) {

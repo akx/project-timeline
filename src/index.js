@@ -1,6 +1,6 @@
 require("style!css!stylus!./style.styl");
 require("style!css!vis/dist/vis.css");
-import vis from "vis";
+import Timeline from "vis/lib/timeline/Timeline";
 import m from "mithril";
 import debounce from "lodash/debounce";
 import parseMarkup from "./parse-markup";
@@ -55,7 +55,7 @@ function getMainRow() {
         m(".col#timeline", {
             config: function configTimeline(element, isInitialized) {
                 if (isInitialized) return;
-                timeline = new vis.Timeline(element, null, {
+                timeline = new Timeline(element, null, {
                     height: "500px",
                     width: "100%",
                     groupOrder: "id",
