@@ -4,7 +4,7 @@ const webpack = require('webpack');
 
 module.exports = {
     context: __dirname + "/src",
-    entry: "./index",
+    entry: ["./index"],
     output: {
         path: __dirname + "/dist",
         filename: "bundle.js",
@@ -21,6 +21,10 @@ module.exports = {
                 loader: 'babel',
                 query: {presets: ['es2015']},
             },
+            {
+                test: /img\/network/,
+                loader: 'null',
+            }
         ],
     },
     plugins: [
