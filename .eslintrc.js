@@ -8,7 +8,7 @@ module.exports = {
         },
     },
     "rules": {
-        "indent": [2, 4],
+        "indent": [2, 4, {"SwitchCase": 1}],
         "quotes": 0,
         "object-curly-spacing": 0,
     }

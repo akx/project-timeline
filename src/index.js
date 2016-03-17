@@ -9,24 +9,42 @@ import getTimelineData from "./get-timeline-data";
 const noop = () => {};
 var timeline = null;
 var markup = localStorage["ptMarkup"] || "";
+var laneSetting = "people";
 
 
 function updateTimeline() {
     if (!timeline) return;
     const parsed = parseMarkup(markup);
-    const data = getTimelineData(parsed);
-    timeline.setData(data);
+    const data = getTimelineData(parsed, laneSetting);
+    timeline.setGroups(data.groups || undefined);
+    timeline.setItems(data.items);
 }
 
 const throttledUpdate = debounce(updateTimeline, 500);
 
-function view() {
+function getToolbar() {
+    return m(".row#toolbar",
+        m(
+            "label",
+            "Lanes:", m("select", {
+                    value: laneSetting,
+                    onchange: function () {
+                        laneSetting = this.value;
+                        updateTimeline();
+                    },
+                },
+                ["people", "projects", "none"].map((value) => m("option", {value, key: value}, value))
+            ))
+    );
+}
+
+function getMainRow() {
     const up = function update() {
         markup = this.value;
         localStorage["ptMarkup"] = markup;
         throttledUpdate();
     };
-    return m("#container",
+    return m(".row#main",
         m(".col.edit",
             m("textarea", {
                 value: markup,
@@ -46,6 +64,10 @@ function view() {
             },
         })
     );
+}
+
+function view() {
+    return m("#container", getToolbar(), getMainRow());
 }
 
 m.mount(document.body, {view, controller: noop});
