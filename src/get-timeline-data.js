@@ -1,5 +1,5 @@
 import flatten from "ramda/src/flatten";
-import identity from "lodash/identity";
+import identity from "ramda/src/identity";
 import map from "ramda/src/map";
 import pipe from "ramda/src/pipe";
 import pluck from "ramda/src/pluck";

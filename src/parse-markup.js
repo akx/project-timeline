@@ -7,7 +7,7 @@ import pipe from "ramda/src/pipe";
 import toLower from "ramda/src/toLower";
 import trim from "ramda/src/trim";
 import uniq from "ramda/src/uniq";
-import upperFirst from "lodash/upperFirst";
+import upperFirst from "upper-case-first";
 import {parseAsRange} from "./dates";
 
 const identityFilter = filter(identity);

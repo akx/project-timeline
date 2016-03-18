@@ -2,7 +2,7 @@ require("style!css!stylus!./style.styl");
 require("style!css!vis/dist/vis.css");
 import Timeline from "vis/lib/timeline/Timeline";
 import m from "mithril";
-import debounce from "lodash/debounce";
+import debounce from "debounce";
 import parseMarkup from "./parse-markup";
 import getTimelineData from "./get-timeline-data";
 
