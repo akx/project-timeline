@@ -57,4 +57,9 @@ describe("Week Parsing", () => {
         expect(start.toISOString()).to.equal("2016-03-14T00:00:00.000Z");
         expect(end.toISOString()).to.equal("2016-05-10T00:00:00.000Z");
     });
+    it("should parse weeks with shorthand ends", () => {
+        const [start, end] = parseAsRange("2016w12..15");
+        expect(start.toISOString()).to.equal("2016-03-14T00:00:00.000Z");
+        expect(end.toISOString()).to.equal("2016-04-11T00:00:00.000Z");
+    });
 });

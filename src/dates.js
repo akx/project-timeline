@@ -6,7 +6,7 @@ function mangle(mom) {
         hour: 0,
         minute: 0,
         second: 0,
-        millisecond: 0
+        millisecond: 0,
     });
 }
 
@@ -57,7 +57,12 @@ export function parseAsRange(rangeText) {
 
     if (week) {
         if (end) {
-            const endWeek = parseWeek(end);
+            let endWeek = null;
+            if (/^(\d+)$/.test(end)) {
+                endWeek = parseWeek(`${week[0].getFullYear()}w${end}`);
+            } else {
+                endWeek = parseWeek(end);
+            }
             if (endWeek) {
                 return [week[0], endWeek[1]];
             }
