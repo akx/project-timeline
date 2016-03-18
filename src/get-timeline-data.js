@@ -33,7 +33,14 @@ export default function getTimelineData(parsed, lanes) {
     let groups = getGroupDefinitions(parsed, lanes);
     const projectStyles = getProjectStyles(parsed);
     const items = [];
-    const addItem = items.push.bind(items);
+    const seen = {};
+    const addItem = function(item) {
+        const hash = `${+item.start},${+item.end},${item.group},${item.content}`;
+        if (!seen[hash]) {
+            items.push(item);
+            seen[hash] = item;
+        }
+    };
     let id = 1;
     parsed.forEach(({range, people, projects}) => {
         xprod(people, projects).forEach(([person, project]) => {
